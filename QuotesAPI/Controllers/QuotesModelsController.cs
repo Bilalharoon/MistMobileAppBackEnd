@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuotesAPI.Models;
@@ -14,19 +13,19 @@ namespace QuotesAPI.Controllers
     public class QuotesModelsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly QuotesModel RandomQuote;
 
         public QuotesModelsController(ApplicationDbContext context)
         {
             _context = context;
-            RandomQuote = _context.QuotesModel.OrderBy(quote => Guid.NewGuid()).FirstOrDefault();
+            
         }
 
         [Route("QOTD")]
         public ActionResult<QuotesModel> GetRandomQuote()
         {
             
-            return Ok(RandomQuote);
+            QuotesModel TodaysQuote = _context.QuotesModel.Where(quote => quote.Date.Day == DateTime.Now.Day).FirstOrDefault();
+            return Ok(TodaysQuote);
         }
 
         // GET: api/QuotesModels
