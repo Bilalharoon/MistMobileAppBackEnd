@@ -20,11 +20,11 @@ namespace QuotesAPI.Controllers
             
         }
 
-        [Route("QOTD")]
-        public ActionResult<QuotesModel> GetRandomQuote()
+        [Route("QOTD/{day}")]
+        public ActionResult<QuotesModel> GetQuoteOfTheDay(int day)
         {
             
-            QuotesModel TodaysQuote = _context.QuotesModel.Where(quote => quote.Date.Day == DateTime.Now.Day).FirstOrDefault();
+            QuotesModel TodaysQuote = _context.QuotesModel.Where(quote => quote.Id == day).FirstOrDefault();
             return Ok(TodaysQuote);
         }
 
@@ -49,7 +49,7 @@ namespace QuotesAPI.Controllers
             return quotesModel;
         }
 
-        // PUT: api/QuotesModels/5
+ /*       // PUT: api/QuotesModels/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutQuotesModel(int id, QuotesModel quotesModel)
         {
@@ -109,5 +109,6 @@ namespace QuotesAPI.Controllers
         {
             return _context.QuotesModel.Any(e => e.Id == id);
         }
+        */
     }
 }
