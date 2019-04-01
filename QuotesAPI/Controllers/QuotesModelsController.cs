@@ -23,7 +23,10 @@ namespace QuotesAPI.Controllers
         [Route("QOTD/{day}")]
         public ActionResult<QuotesModel> GetQuoteOfTheDay(int day)
         {
-            
+            if (day > 31)
+            {
+                return BadRequest("day is out of bounds");
+            }   
             QuotesModel TodaysQuote = _context.QuotesModel.Where(quote => quote.Id == day).FirstOrDefault();
             return Ok(TodaysQuote);
         }
